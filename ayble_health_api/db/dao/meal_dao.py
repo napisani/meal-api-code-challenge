@@ -13,7 +13,15 @@ class MealDAO:
     def __init__(self, session: AsyncSession = Depends(get_db_session)):
         self.session = session
 
-    def construct_portion(self, food_type: FoodType, portion_size_cups: float):
+    def construct_portion(self, food_type: FoodType, 
+                          portion_size_cups: float) -> MealPortionModel:
+        """
+        Constructs a MealPortionModel from the given 
+        parameters without adding it to the database
+        :param food_type: the type of food in this portion
+        :param portion_size_cups: the size of this portion in cups
+        """
+
         return MealPortionModel(food_type=food_type,
                                 portion_size_cups=portion_size_cups)
 
@@ -49,9 +57,8 @@ class MealDAO:
         """
         Updates a meal portion in the database
 
-        :param meal_id: the id of the meal to update
-        :param portion_id: the id of the portion to update
-        :param portion: the updated portion
+        :param existing_meal_portion: the existing meal portion
+        :param portion_with_updates: the portion with the updated values
         :return: the updated meal portion
         """
         existing_meal_portion.food_type = portion_with_updates.food_type

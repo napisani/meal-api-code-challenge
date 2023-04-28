@@ -24,7 +24,7 @@ class MealPortion(BaseModel):
         example=1.5)
 
     @validator('portion_size_cups')
-    def portion_size_is_in_correct_increments(cls, portion_size_cups):
+    def portion_size_is_in_correct_increments(cls, portion_size_cups: float) -> float:
         if portion_size_cups % 0.5 != 0:
             raise ValueError('portion size must be in increments of 0.5 cups')
         return portion_size_cups
