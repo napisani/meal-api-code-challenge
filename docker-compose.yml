@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: prod
+    image: ayble_health_api:${AYBLE_HEALTH_API_VERSION:-latest}
+    restart: always
+    env_file:
+    - .env
+    environment:
+      AYBLE_HEALTH_API_HOST: 0.0.0.0
+      AYBLE_HEALTH_API_DB_FILE: /db_data/db.sqlite3
+    ports:
+    - "8000:8000"
+    volumes:
+    - ayble_health_api-db-data:/db_data/
+
+
+
+volumes:
+  ayble_health_api-db-data:
+    name: ayble_health_api-db-data

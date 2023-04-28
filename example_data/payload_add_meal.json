@@ -1,0 +1,10 @@
+{
+  "portions": [
+    {
+      "food_type": "Meat",
+      "portion_size_cups": 10
+    }
+  ],
+  "user_id" : 1
+
+}
