@@ -1,5 +1,3 @@
-import logging
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -10,7 +8,6 @@ from ayble_health_api.web.api.meal.meal_schema import Meal, MealPortion
 
 router = APIRouter()
 
-logger = logging.getLogger('meals_api')
 
 
 @router.post("/meal")
@@ -30,7 +27,6 @@ async def add_meal(
     ]
     added_meal = await meal_dao.create_meal(portions, user)
     await session.commit()
-    logger.info(f"Added meal: {added_meal}")
     return Meal.from_orm(added_meal)
 
 
@@ -40,7 +36,6 @@ async def update_meal_portion(
     meal_portion: MealPortion,
     session: AsyncSession = Depends(get_db_session)
 ) -> MealPortion:
-    print(meal_portion_id)
     meal_dao = MealDAO(session)
     meal_portion_model = meal_dao.construct_portion(
         food_type=meal_portion.food_type,
@@ -52,5 +47,4 @@ async def update_meal_portion(
     updated_portion = await meal_dao.update_meal_portion(
         existing_portion, meal_portion_model)
     await session.commit()
-    logger.info(f"Updated meal portion: {updated_portion}")
     return MealPortion.from_orm(updated_portion)

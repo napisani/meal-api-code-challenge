@@ -9,7 +9,6 @@ router = APIRouter()
 @router.post("/user")
 async def create_user(
     user: User, session: AsyncSession = Depends(get_db_session)) -> User:
-    print(user)
     user_dao = UserDAO(session)
     added_user = await user_dao.create_user(user.first_name, user.last_name)
     await session.commit()
